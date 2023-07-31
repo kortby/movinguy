@@ -4,7 +4,7 @@ import 'package:movinguy/global/global.dart';
 import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
 
 class SelectNearestActiveDriversScreen extends StatefulWidget {
-  const SelectNearestActiveDriversScreen({Key? key}) : super(key: key);
+  const SelectNearestActiveDriversScreen({super.key});
 
   // const SelectNearestActiveDriverScreen({super.key});
 
@@ -13,7 +13,7 @@ class SelectNearestActiveDriversScreen extends StatefulWidget {
       _SelectNearestActiveDriversScreenState();
 }
 
-class _SelectNearestActiveDriverScreenState
+class _SelectNearestActiveDriversScreenState
     extends State<SelectNearestActiveDriversScreen> {
   get key => null;
 
@@ -41,7 +41,8 @@ class _SelectNearestActiveDriverScreenState
         ),
       ),
       body: ListView.builder(
-        itemBuilder: (BuildContext context, int idx) {
+        itemCount: dList.length,
+        itemBuilder: (BuildContext context, int index) {
           return Card(
             key: key,
             color: Colors.grey,
@@ -52,7 +53,7 @@ class _SelectNearestActiveDriverScreenState
               leading: Padding(
                 padding: const EdgeInsets.only(top: 2),
                 child: Image.asset(
-                  'images/${dList[idx]['car_details']['car_type']}.png',
+                  'images/${dList[index]['car_details']['car_type']}.png',
                   width: 70,
                 ),
               ),
@@ -60,33 +61,26 @@ class _SelectNearestActiveDriverScreenState
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    dList[idx]['name'],
+                    '${dList[index]['name']}',
                     style: const TextStyle(
                       fontSize: 14,
                       color: Colors.black54,
                     ),
                   ),
                   Text(
-                    dList[idx]['car_details']['car_model'],
+                    '${dList[index]['car_details']['model']}',
                     style: const TextStyle(
                       fontSize: 12,
                       color: Colors.white54,
                     ),
                   ),
                   SmoothStarRating(
-                    allowHalfRating: true,
-                    onRatingChanged: (v) {
-                      // rating = v;
-                      setState(() {});
-                    },
-                    starCount: 5,
                     rating: 3.5,
-                    size: 15.0,
-                    filledIconData: Icons.blur_off,
-                    halfFilledIconData: Icons.blur_on,
                     color: Colors.black,
                     borderColor: Colors.black,
-                    spacing: 0.0,
+                    allowHalfRating: true,
+                    starCount: 5,
+                    size: 15,
                   ),
                 ],
               ),
@@ -106,7 +100,7 @@ class _SelectNearestActiveDriverScreenState
                     '13 miles',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.grey,
+                      color: Colors.black26,
                     ),
                   ),
                 ],
@@ -114,7 +108,6 @@ class _SelectNearestActiveDriverScreenState
             ),
           );
         },
-        itemCount: dList.length,
       ),
     );
   }

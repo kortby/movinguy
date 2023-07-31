@@ -16,7 +16,7 @@ class HelperMethods {
         .child(currentFirebaseUser!.uid);
     userRef.once().then((snap) {
       if (snap.snapshot.value != null) {
-        userModelcurrentUser = UserModel.fromSnapshot(snap.snapshot);
+        userModelCurrentUser = UserModel.fromSnapshot(snap.snapshot);
       }
     });
   }

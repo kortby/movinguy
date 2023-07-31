@@ -3,4 +3,6 @@ import 'package:movinguy/models/user_model.dart';
 
 final FirebaseAuth fAuth = FirebaseAuth.instance;
 User? currentFirebaseUser;
-UserModel? userModelcurrentUser;
+UserModel? userModelCurrentUser;
+List dList = []; // online active driverKeys info list
+

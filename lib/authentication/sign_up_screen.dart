@@ -261,9 +261,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   );
                 },
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Text(
                       'Already have an Account? ',
                       style: TextStyle(
