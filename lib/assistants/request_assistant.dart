@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
+import 'package:movinguy/global/global.dart';
 import 'package:movinguy/infoHandler/app_info.dart';
 import 'package:movinguy/models/directions.dart';
 import 'package:provider/provider.dart';
@@ -39,5 +40,39 @@ class RequestAssistant {
     } catch (exp) {
       return 'Error Occurred, Failed. No Response.';
     }
+  }
+
+  static sendNotificationToDriverNow(String deviceRegistrationToken, String userRideRequestId, context) async {
+
+    var destinationAddress = userDropOffAddress;
+    Map<String, String> headerNotification = {
+      'Content-Type': 'application/json',
+      'Authorization': cloudMessagingServerToken,
+    };
+
+    Map bodyNotification = {
+      'body': 'Destination Address, \n$destinationAddress',
+      'title': 'New Trip Request',
+    };
+
+    Map dataMap = {
+      'click_action': '',
+      'id': '1',
+      'status':'done',
+      'rideRequestId': userRideRequestId,
+    };
+
+    Map officialNotificationFormat = {
+      'notification': bodyNotification,
+      'data': dataMap,
+      'priority': 'high',
+      'to': deviceRegistrationToken,
+    };
+    
+    var responseNotification = http.post(
+        Uri.parse('https://fcm.googleapis.com/fcm/send'),
+        headers: headerNotification,
+        body: jsonEncode(officialNotificationFormat),
+    );
   }
 }

@@ -7,11 +7,18 @@ import 'package:movinguy/models/predicted_places.dart';
 import 'package:movinguy/widgets/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
-class PlacePredictionTile extends StatelessWidget {
+import '../global/global.dart';
+
+class PlacePredictionTile extends StatefulWidget {
   final PredictedPlaces? predictedPlaces;
 
   const PlacePredictionTile({Key? key, this.predictedPlaces}) : super(key: key);
 
+  @override
+  State<PlacePredictionTile> createState() => _PlacePredictionTileState();
+}
+
+class _PlacePredictionTileState extends State<PlacePredictionTile> {
   getPlaceDirectionDetails(String placeId, context) async {
     showDialog(
       context: context,
@@ -39,6 +46,9 @@ class PlacePredictionTile extends StatelessWidget {
 
       Provider.of<AppInfo>(context, listen: false)
           .updateDropOffLocationAddress(directions);
+      setState(() {
+        userDropOffAddress = directions.locationName!;
+      });
       Navigator.pop(context, 'obtainDropOff');
     }
   }
@@ -48,7 +58,7 @@ class PlacePredictionTile extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(primary: Colors.white10),
       onPressed: () {
-        getPlaceDirectionDetails(predictedPlaces!.place_id!, context);
+        getPlaceDirectionDetails(widget.predictedPlaces!.place_id!, context);
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -69,7 +79,7 @@ class PlacePredictionTile extends StatelessWidget {
                   height: 8,
                 ),
                 Text(
-                  predictedPlaces!.main_text!,
+                  widget.predictedPlaces!.main_text!,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 16,
@@ -80,7 +90,7 @@ class PlacePredictionTile extends StatelessWidget {
                   height: 4,
                 ),
                 Text(
-                  predictedPlaces!.secondary_text!,
+                  widget.predictedPlaces!.secondary_text!,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 12,
